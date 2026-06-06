@@ -13,6 +13,7 @@ export interface Env {
   SUB_PATH: string;
   NAME: string;
   PROXY_IP: string;
+  FAKE_WEB: string;
   SESSION_DO: DurableObjectNamespace;
 }
 

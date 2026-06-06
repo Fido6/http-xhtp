@@ -17,6 +17,8 @@ SUB_PATH = "sub"
 NAME = "CF-Worker-Proxy"
 # Proxy IP（用于访问 Cloudflare CDN 网站，留空则不使用）
 PROXY_IP = "sg.wogg.us.kg"
+# FAKE_WEB（反代镜像站，留空则不启用，例如：https://www.example.com）
+FAKE_WEB = "https://www.example.com"
 
 # Durable Objects 绑定
 [durable_objects]

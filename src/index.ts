@@ -37,6 +37,33 @@ function generateSubscription(env: Env, domain: string): string {
 }
 
 /**
+ * FAKE_WEB 反代：将请求转发到目标网站
+ */
+async function handleFakeWeb(request: Request, fakeWebUrl: string): Promise<Response> {
+  const target = new URL(fakeWebUrl);
+  const requestUrl = new URL(request.url);
+
+  // 构建目标 URL，保留原始路径和查询参数
+  const targetUrl = new URL(requestUrl.pathname + requestUrl.search, target.origin);
+
+  // 构建新请求头
+  const headers = new Headers(request.headers);
+  headers.set('Host', target.host);
+
+  // 移除 hop-by-hop 头
+  for (const h of ['cf-connecting-ip', 'cf-ipcountry', 'cf-ray', 'cf-visitor', 'x-forwarded-for', 'x-forwarded-proto', 'x-real-ip']) {
+    headers.delete(h);
+  }
+
+  return fetch(targetUrl.toString(), {
+    method: request.method,
+    headers,
+    body: request.body,
+    redirect: 'follow',
+  });
+}
+
+/**
  * 解析 URL 路径
  * 格式: /{xpath}/{auth_token}/{session_id}/{seq}
  */
@@ -80,14 +107,6 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
-    // 健康检查
-    if (path === '/') {
-      return new Response('Hello, World\n', {
-        status: 200,
-        headers: { 'Content-Type': 'text/plain' },
-      });
-    }
-
     // 客户端配置说明
     if (path === `/${env.SUB_PATH}`) {
       const domain = url.hostname;
@@ -100,6 +119,10 @@ export default {
     // 解析 XHTTP 路径
     const parsed = parsePath(path, env.XPATH);
     if (!parsed.isValid) {
+      // FAKE_WEB：反代镜像站，使 Worker 看起来像正常网站
+      if (env.FAKE_WEB) {
+        return handleFakeWeb(request, env.FAKE_WEB);
+      }
       return new Response('Not Found', { status: 404 });
     }
 

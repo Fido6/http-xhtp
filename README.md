@@ -4,6 +4,17 @@
 
 基于 [Xray-core XHTTP](https://github.com/XTLS/Xray-core/tree/main/transport/internet/splithttp) 协议的 HTTP 代理服务器，运行在 Cloudflare Workers 上。使用 XHTTP packet-up 模式作为传输层，通过 Path 鉴权替代 VLESS UUID 验证。
 
+> [!IMPORTANT]
+> ⚠️ Disclaimer
+>
+>免责声明：
+>此处只探讨协议组合的可能性，仅供教育、科学研究及个人安全测试之目的，代码均由ai生成，不确保其稳定性。
+>
+>XHTTP协议本身比较慢，不适合用作主力协议，为了安全起见，绑定自定义域名后限制asn/ip访问。
+>
+>建议在测试完成后 24 小时内删除本项目相关部署。
+>
+
 ## 功能特性
 
 - ✅ XHTTP packet-up 模式传输
@@ -42,6 +53,8 @@ SUB_PATH = "sub"
 # 节点名称
 NAME = "CF-Worker-Proxy"
 
+# FAKE_WEB（反代镜像站，留空则不启用，例如：https://www.example.com）
+FAKE_WEB = "https://www.example.com"
 ```
 
 ### 3. 本地开发
