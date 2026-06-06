@@ -1,0 +1,30 @@
+name = "http-xhttp-packet"
+main = "src/index.ts"
+compatibility_date = "2026-06-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# 必填：鉴权令牌（建议使用强随机字符串）
+AUTH_TOKEN = "your-strong-secret-token"
+
+# XHTTP 路径前缀
+XPATH = "xhttp"
+
+# 订阅路径
+SUB_PATH = "sub"
+
+# 节点名称
+NAME = "CF-Worker-Proxy"
+# Proxy IP（用于访问 Cloudflare CDN 网站，留空则不使用）
+PROXY_IP = "sg.wogg.us.kg"
+
+# Durable Objects 绑定
+[durable_objects]
+bindings = [
+  { name = "SESSION_DO", class_name = "SessionDO" }
+]
+
+# Durable Objects 迁移（免费计划需要使用 sqlite）
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["SessionDO"]
