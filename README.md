@@ -14,6 +14,15 @@
 >
 >建议在测试完成后 24 小时内删除本项目相关部署。
 >
+>只支持xray-core，v2rayN(G)、exclave可以使用
+>
+>特殊提醒：由于cloudflare Durable Objects免费版本限制，部署后一开始大概率能用，用一段时间后就连接不上了，
+>
+>此时如果你打开了Workers Observability，你应该会看到这个`Exceeded allowed duration in Durable Objects free tier.`
+> 
+>看到这个不用怀疑，这个节点用不了了，等到下一个 UTC 0:00 重置Durable Objects.
+> 
+>[相关文档](https://developers.cloudflare.com/durable-objects/platform/pricing/#compute-billing)
 
 ## 功能特性
 
@@ -21,8 +30,11 @@
 - ✅ 标准 HTTP 代理协议
 - ✅ Path 鉴权（auth_token）
 - ✅ 会话管理与自动清理
-- ✅ 订阅链接生成
+- ✅ 配置生成
 - ✅ CORS 支持
+
+需求： 一个正常的cloudflare账号（可以正常部署worker的账号），
+      一个域名（按需）
 
 ## 快速开始
 
@@ -41,7 +53,7 @@ npm install
 
 ```toml
 [vars]
-# 必填：鉴权令牌（建议使用强随机字符串）
+# 必填：鉴权令牌（建议使用强随机字符串，尽量不要使用特殊字符）
 AUTH_TOKEN = "your-strong-secret-token"
 
 # XHTTP 路径前缀
@@ -53,7 +65,7 @@ SUB_PATH = "sub"
 # 节点名称
 NAME = "CF-Worker-Proxy"
 
-# FAKE_WEB（反代镜像站，留空则不启用，例如：https://www.example.com）
+# FAKE_WEB（反代其他网页，留空则不启用，例如：https://www.example.com）
 FAKE_WEB = "https://www.example.com"
 ```
 
@@ -75,9 +87,8 @@ npm run deploy
 
 ### 获取订阅链接
 
-访问 `https://your-worker.your-domain.com/sub`
-强烈推荐使用自定义域名
-返回 base64 编码的订阅链接。
+访问 `https://your-worker.your-domain.com/${SUB_PATH}`
+强烈推荐使用自定义域名，返回配置内容。
 
 ### XHTTP 路径格式
 
@@ -203,11 +214,11 @@ npm run tail
 2. **404 Not Found**：检查路径格式是否正确
 3. **502 Bad Gateway**：目标服务器不可达
 4. **连接超时**：检查会话是否建立成功
-5. 由于bug的存在，目前暂时不考虑使用 http basic认证
+5. 由于bug的存在，目前暂时不支持 http basic认证
 
 ## 更新日志
 
-### v1.0.0 (2024-06-14)
+### v1.0.0 (2026-06-06)
 - 初始版本
 - 实现 XHTTP packet-up 模式
 - 实现 Path 鉴权
