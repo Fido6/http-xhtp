@@ -23,6 +23,13 @@
 >看到这个不用怀疑，这个节点用不了了，等到下一个 UTC 0:00 重置Durable Objects.
 > 
 >[相关文档](https://developers.cloudflare.com/durable-objects/platform/pricing/#compute-billing)
+>
+>[http xhttp(stream-one版本)](https://raw.githubusercontent.com/Fido6/tool-and-other-backup/refs/heads/main/worker%E8%84%9A%E6%9C%AC/cf_http_xhttp.js) 不依赖Durable Objects，⚠️需要自定义域名+开启grpc
+
+客户端推荐设置 XHTTP EXTRA: `{"xmux":{"maxConcurrency":1}}`
+
+没有订阅链接，建议把网页给的配置按需填写到v2rayN里面，单独导出完整配置，（手机端可以直接用exclave输入配置）
+![预览](/v2rayn.png)
 
 ## 功能特性
 
