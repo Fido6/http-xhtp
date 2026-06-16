@@ -8,11 +8,11 @@
 > ⚠️ Disclaimer
 >
 >免责声明：
->此处只探讨协议组合的可能性，仅供教育、科学研究及个人安全测试之目的，代码均由ai生成，不确保其稳定性。
+>此处只探讨协议组合的可能性，仅供教育、科学研究及个人安全测试之目的，代码均由ai生成，稳定性就是一坨💩。
 >
->XHTTP协议本身比较慢，不适合用作主力协议，为了安全起见，绑定自定义域名后限制asn/ip访问。
+>XHTTP协议本身比较慢，同条件下请求数大于ws、grpc，不要用作主力协议，为了安全起见，绑定自定义域名后限制asn/ip访问。
 >
->建议在测试完成后 24 小时内删除本项目相关部署。
+>建议在测试完成后 一坤 时（2.5小时）内删除本项目相关部署。
 >
 >只支持xray-core，v2rayN(G)、exclave可以使用
 >
@@ -24,7 +24,7 @@
 > 
 >[相关文档](https://developers.cloudflare.com/durable-objects/platform/pricing/#compute-billing)
 >
->[http xhttp(stream-one版本)](https://raw.githubusercontent.com/Fido6/tool-and-other-backup/refs/heads/main/worker%E8%84%9A%E6%9C%AC/cf_http_xhttp.js) 不依赖Durable Objects，⚠️需要自定义域名+开启grpc
+>[http xhttp(stream-one版本)](https://raw.githubusercontent.com/Fido6/tool-and-other-backup/refs/heads/main/worker%E8%84%9A%E6%9C%AC/cf_http_xhttp.js) 不依赖Durable Objects，⚠️需要自定义域名+开启grpc，稳定性更是一坨臭狗屎
 
 客户端推荐设置 XHTTP EXTRA: `{"xmux":{"maxConcurrency":1}}`
 
